@@ -81,7 +81,7 @@ public class Conversor {
 			indiceInicial = indiceFinal;
 		
 		
-		//procurando o terceiro conjunto de chaves são as transições
+		//procurando o terceiro conjunto de chaves que são as transições
 			while(conteudoArquivo.charAt(indiceInicial) != '{'){
 				indiceInicial++;
 				indiceFinal++;
@@ -101,7 +101,7 @@ public class Conversor {
 			indiceFinal ++;
 			indiceInicial++;
 			
-			transicoes = new StringTokenizer(conteudoArquivo.substring(indiceInicial, indiceFinal), "},");
+			transicoes = new StringTokenizer(conteudoArquivo.substring(indiceInicial, indiceFinal), "}");
 			
 			indiceInicial = indiceFinal;
 				
@@ -143,9 +143,14 @@ public class Conversor {
 			}
 			
 			
+		
+		
+		/*Apos separação dos elementos estados, alfabeto, transições, estado inicial e estados finais
+		 * sera criado os objetos necessarios automato, estados e transições
+		 */
 			
 			
-		//Adicionando os estados
+		//Adicionando os estados ao objeto Automato
 			while(estados.hasMoreTokens()){
 				Estado novoEstado = new Estado(estados.nextToken());
 				
@@ -161,10 +166,82 @@ public class Conversor {
 				
 				automato.addEstado(novoEstado);
 			}
+	
+		//Adicionando objetos Transições
+			while(transicoes.hasMoreTokens()){
+				String transicaoAtual = new String(transicoes.nextToken());
+				int tIndiceInicial = 0, tIndiceFinal = 0;	//indices usados para percorrer string transicao
+				
+				
+				//pegando estado dono da transicao
+				
+					if(transicaoAtual.length() > 1){
+							while(transicaoAtual.charAt(tIndiceInicial) != '('){
+								
+								tIndiceInicial++;
+								tIndiceFinal++;
+							}
+							
+							while(transicaoAtual.charAt(tIndiceFinal) != ','){
+								tIndiceFinal++;
+							}
+										
+					}
+					else{
+						break;	//para de processar as transições (ultima linha de transicao, normalmente vazia)
+					}
+				
+				tIndiceInicial++;
+					
+				//pegando referencia do estado dono da transicao
+				Estado estadoTransicao = automato.getEstado(transicaoAtual.substring(tIndiceInicial, tIndiceFinal));
+				Transicao novaTransicao = new Transicao(); //criando nova transicao vazia
+				
+				
+				
+				tIndiceInicial = ++tIndiceFinal;
+				
+				//pegando letra de transicao
+					
+					if(transicaoAtual.length() > 5){						
+							while(transicaoAtual.charAt(tIndiceFinal) != ')'){
+								tIndiceFinal++;
+							}
+							
+			
+					}
+					
+				novaTransicao.setLetra(transicaoAtual.substring(tIndiceInicial, tIndiceFinal)); 
+				
+				tIndiceInicial = ++tIndiceFinal; 
+				
+				//pegando conjunto de estados da transicao
+				
+					while(transicaoAtual.charAt(tIndiceInicial) != '{'){
+						tIndiceInicial++;
+						tIndiceFinal++;
+					}
+					
+					tIndiceInicial++;
+					
+					//separando os estados
+					estados = new StringTokenizer(transicaoAtual.substring(tIndiceInicial, transicaoAtual.length()), ",");
+					
+					//System.out.println(transicaoAtual.substring(tIndiceInicial, transicaoAtual.length()).trim());
+					
+					while(estados.hasMoreElements()){
+						Estado estadoSaida = automato.getEstado(estados.nextToken());	//referenciado cada estado pelo nome
+						novaTransicao.addEstadoSaida(estadoSaida);	//adicionando estado em lista da transicao
+					} 
+				
+				estadoTransicao.addTransicao(novaTransicao); //add transicao ao estado de origem
+			}
+		
+			
 			
 		//Adicionando as letras do alfabeto
-			while(estados.hasMoreTokens()){
-				String novaLetra = new String(estados.nextToken());
+			while(alfabeto.hasMoreTokens()){
+				String novaLetra = new String(alfabeto.nextToken());
 				automato.addLetra(novaLetra);
 			}
 			

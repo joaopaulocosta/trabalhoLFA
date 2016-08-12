@@ -29,6 +29,16 @@ public class Automato {
 		this.estadosFinais.add(estadoFinal);
 	}
 	
+	//retorna estado correspondente a nome
+	public Estado getEstado(String nomeEstado){
+		for(Estado aux : this.listaEstados){
+			if(aux.getNome().equals(nomeEstado))
+				return aux;
+		}
+		return null;
+	}
+	
+	
 	public void imprimir(){
 		
 		
@@ -43,15 +53,15 @@ public class Automato {
 		if(!this.alfabeto.isEmpty()){		//verifica se lista esta vazia
 			System.out.print("Alfabeto: ");
 			for(String aux: this.alfabeto){
-				System.out.print(aux);
+				System.out.print(aux + "," );
 			}
 			System.out.println();
 		}
-		/*System.out.print("Transicoes: ");
-		for(String aux: this.alfabeto){
-			System.out.print(aux);
+		
+		System.out.println("Transições: ");
+		for(Estado aux : this.listaEstados){
+			System.out.print(aux.getTransicoes());
 		}
-		System.out.println(); */
 		
 		if(this.estadoInicial != null){		//verifica se objeto esta instanciado
 			System.out.println("Estado inicial: "+ this.estadoInicial.getNome());
