@@ -38,6 +38,13 @@ public class Automato {
 		return null;
 	}
 	
+	public ArrayList<Estado> getEstados(){
+		return this.listaEstados;
+	}
+	
+	public ArrayList<String> getAlfabeto(){
+		return this.alfabeto;
+	}
 	
 	public void imprimir(){
 		

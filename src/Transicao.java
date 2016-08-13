@@ -37,5 +37,18 @@ public class Transicao {
 		this.estadosSaida.add(estado);
 	}
 	
+	//funcao retorna string com estados da lista de estados de saida 
+	public String stringEstados(){
+		String estados = new String("");
+		int cont = 0;
+		for(Estado aux : this.estadosSaida){
+			estados += aux.getNome();
+			if(cont < this.estadosSaida.size() - 1){	//retira a ultima virgula q0,q1,q2 
+				estados += ",";
+			}
+			cont++;
+		}
+		return estados;
+	}
 	
 }
