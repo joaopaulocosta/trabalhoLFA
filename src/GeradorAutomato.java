@@ -31,7 +31,7 @@ public class GeradorAutomato {
 				
 				//tratamento de escessoes
 				} catch (java.io.FileNotFoundException e){
-					System.out.println("Arq. nao existe. Causa: " + e.getMessage());
+					System.out.println("Arqquivo nao existe. Causa: " + e.getMessage());
 				} catch (java.io.IOException e) {
 					System.out.println( "Erro de E/S. Causa: " + e.getMessage() );
 				}

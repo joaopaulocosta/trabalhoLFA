@@ -1,4 +1,7 @@
 import java.util.ArrayList;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 
 public class GeradorSaida {
 	
@@ -6,44 +9,98 @@ public class GeradorSaida {
 	
 	public  GeradorSaida(){
 	}
-
-	public void imprimirAutomato(Automato automato){
-		
-		//imprimir cabeçalho
-			System.out.print("ND-.\t\t");
-			for(String aux: automato.getAlfabeto()){
-				System.out.print(aux + "\t\t\t\t");
+	
+	public int maiorString(ArrayList<Estado> estados){
+		int cont = 0;
+		for(Estado aux : estados){
+			for(Transicao transicaoAUX: aux.getTransicoes()){
+				if(transicaoAUX.getEstadosSaida().size() > cont){
+					cont = transicaoAUX.getEstadosSaida().size();
+				}
 			}
-			
-			System.out.println("");
+		}
 		
-		//imprimiar linhas
-			
-			ArrayList<String> alfabetoComLambida = automato.getAlfabeto();
-			for(Estado estados : automato.getEstados()){
-				//imprimindo colunas
-					System.out.print(estados.getNome() + "\t\t");
-					for(String aux: alfabetoComLambida){
-						Transicao transicaoAux = estados.getTransicao(aux);
-						if(transicaoAux != null){	//se estado possui transição com letra do alfabeto
-							System.out.print("{");
-							System.out.print(transicaoAux.stringEstados());
-							System.out.print("}");
-							if(transicaoAux.stringEstados().length() < 6)
-								System.out.print("\t\t\t\t\t\t");
-							
-						}
-						else{	//sem transições para esta letra
-							System.out.print("0");
-							System.out.print("\t\t\t\t\t\t");
-						}
-						
-						System.out.print("\t");
+		if(cont > 8)
+			cont = (int)cont/2;
+		
+		return cont ;
+	}
+
+	//funcao que escreve no arquivo
+	//1 Parametro: Texto
+	//2 Flag, usa quebra de linha no final do texto caso seja > 0
+	//3 Objeto PrintWriter que grava no arquivo
+	public void imprimir( String texto, int flagQuebraLinha, PrintWriter gravarArq){
+		gravarArq.printf("%s", texto);
+		for(int i = texto.length(); i< 30; i++){
+			gravarArq.printf(" ");
+		}
+		
+		if(flagQuebraLinha > 0)
+			gravarArq.printf("\r\n");
+	}
+	
+	public void imprimirAutomato(Automato automato, int flag, String nomeArquivo){
+		try{
+			FileWriter arq = new FileWriter(nomeArquivo, true);
+		    PrintWriter gravarArq = new PrintWriter(arq);
+		    	
+		    	imprimir("Saída: ("+ nomeArquivo + "):",1,gravarArq);
+		    
+				String texto = new String("");
+				//int cont = maiorString(automato.getEstados());
+				//imprimir cabeçalho
+					if(flag == 0){
+						imprimir("AFND-.",0, gravarArq);
+					}
+					else if(flag == 1){
+						imprimir("AFND",0, gravarArq);
+					}
+					else if(flag == 2){
+						imprimir("AFD",0, gravarArq);
+					}
+		
+					for(String aux: automato.getAlfabeto()){
+						imprimir(aux,0, gravarArq);
 						
 					}
-				System.out.println("");
+					
+					imprimir("",1, gravarArq);
 				
-			}
+				//imprimir linhas
+					
+					ArrayList<String> alfabetoComLambida = automato.getAlfabeto();
+					for(Estado estados : automato.getEstados()){
+						//imprimindo colunas
+							imprimir(estados.getNome(),0, gravarArq);
+							for(String aux: alfabetoComLambida){
+								Transicao transicaoAux = estados.getTransicao(aux);
+								if(transicaoAux != null){	//se estado possui transição com letra do alfabeto
+									texto += "{";
+									texto += transicaoAux.stringEstados();
+									texto += "}";
+									imprimir(texto,0, gravarArq);
+									
+								}
+								else{	//sem transições para esta letra
+									imprimir("0",0, gravarArq);
+								}
+								texto = "";
+								
+								
+							}
+							imprimir("",1, gravarArq);
+						
+					}
+				imprimir("",1,gravarArq);
+				arq.close();
+					
+		}
+		catch (java.io.FileNotFoundException e){
+			System.out.println("Arquivo de saida nao existe. Causa: " + e.getMessage());
+		} catch (java.io.IOException e) {
+			System.out.println( "Erro de E/S. Causa: " + e.getMessage() );
+		}
 	}
 
 }
