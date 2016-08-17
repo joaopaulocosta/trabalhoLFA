@@ -353,6 +353,7 @@ public class GeradorAutomato {
 			String novaLetra = new String(alfabeto.nextToken());
 			automato.addLetra(novaLetra);
 		}
+		automato.addLetra(".");  	//adicionando lambida ao alfabeto
 	}
 	
 	//funcao que cria um objeto automato de acordo com conteudo lido do arquivo de entrada

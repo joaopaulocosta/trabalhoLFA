@@ -21,6 +21,10 @@ public class Automato {
 		this.alfabeto.add(letra);
 	}
 	
+	public void delLetra(String letra){
+		this.alfabeto.remove(letra);
+	}
+	
 	public void addEstadoInicial(Estado estadoInicial){
 		this.estadoInicial = estadoInicial;
 	}

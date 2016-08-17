@@ -51,4 +51,8 @@ public class Transicao {
 		return estados;
 	}
 	
+	public ArrayList<Estado> getEstadosSaida(){
+		return this.estadosSaida;
+	}
+	
 }

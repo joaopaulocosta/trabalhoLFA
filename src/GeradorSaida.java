@@ -15,12 +15,11 @@ public class GeradorSaida {
 				System.out.print(aux + "\t\t");
 			}
 			
-			System.out.println(".");
+			System.out.println("");
 		
 		//imprimiar linhas
 			
 			ArrayList<String> alfabetoComLambida = automato.getAlfabeto();
-			alfabetoComLambida.add(".");
 			for(Estado estados : automato.getEstados()){
 				//imprimindo colunas
 					System.out.print(estados.getNome() + "\t\t");
