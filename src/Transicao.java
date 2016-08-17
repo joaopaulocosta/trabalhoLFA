@@ -34,8 +34,13 @@ public class Transicao {
 	
 	
 	public void addEstadoSaida(Estado estado){
-		this.estadosSaida.add(estado);
+		//se lista de saida ainda não contem estado, adiciona
+		if(!this.estadosSaida.contains(estado))
+			this.estadosSaida.add(estado);
+
 	}
+	
+
 	
 	//funcao retorna string com estados da lista de estados de saida 
 	public String stringEstados(){

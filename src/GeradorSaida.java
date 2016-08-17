@@ -12,7 +12,7 @@ public class GeradorSaida {
 		//imprimir cabeçalho
 			System.out.print("ND-.\t\t");
 			for(String aux: automato.getAlfabeto()){
-				System.out.print(aux + "\t\t");
+				System.out.print(aux + "\t\t\t\t");
 			}
 			
 			System.out.println("");
@@ -30,12 +30,12 @@ public class GeradorSaida {
 							System.out.print(transicaoAux.stringEstados());
 							System.out.print("}");
 							if(transicaoAux.stringEstados().length() < 6)
-								System.out.print("\t");
+								System.out.print("\t\t\t\t\t\t");
 							
 						}
 						else{	//sem transições para esta letra
 							System.out.print("0");
-							System.out.print("\t");
+							System.out.print("\t\t\t\t\t\t");
 						}
 						
 						System.out.print("\t");

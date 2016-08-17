@@ -13,8 +13,27 @@ public class Estado {
 		return this.nome;
 	}
 	
+	
+	//função que adiciona transiçao no estado, caso a transição ja exista ele concatena a lista de estados de saída 
+	//verificando se existe estados repetidos
 	public void addTransicao(Transicao transicao){
-		this.listaTransicoes.add(transicao);
+		//se transicao não existe adiciona normalmente
+		if(this.getTransicao(transicao.getLetra()) == null){
+			this.listaTransicoes.add(transicao);
+		}
+		else{	//se transicao ja existe deve ser feita a concatenação verificando os estados repetidos
+			
+			ArrayList<Estado> estadosSaidaAtual = this.getTransicao(transicao.getLetra()).getEstadosSaida();
+			
+			//percorrendo lista de estados de saida da transicao
+			for(Estado estadoTransicao : transicao.getEstadosSaida()){
+				
+				//verifica se estado ja esta contido na transição do estado atual
+				if(!estadosSaidaAtual.contains(estadoTransicao)){
+					this.getTransicao(transicao.getLetra()).addEstadoSaida(estadoTransicao);
+				}
+			}
+		}
 	}
 	
 	//retorna transicao de acordo com letra
