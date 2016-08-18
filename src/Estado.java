@@ -3,6 +3,7 @@ import java.util.ArrayList;
 public class Estado {
 	private String nome;
 	private ArrayList<Transicao> listaTransicoes;
+	private int indiceOrdenacao;
 	
 	public Estado(String nome){
 		this.nome = nome;
@@ -17,6 +18,9 @@ public class Estado {
 		return this.nome;
 	}
 	
+	public void setIndiceOrdenacao(int indice){
+		this.indiceOrdenacao = indice;
+	}
 	
 	//função que adiciona transiçao no estado, caso a transição ja exista ele concatena a lista de estados de saída 
 	//verificando se existe estados repetidos
@@ -58,5 +62,6 @@ public class Estado {
 		
 		return this.listaTransicoes;
 	}
+	
 	
 }

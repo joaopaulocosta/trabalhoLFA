@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class ConversorAFD {
 	
@@ -29,7 +30,7 @@ public class ConversorAFD {
 
 					}
 				}
-				
+				listaEstados.sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
 				String novoNome = "";
 				for(Estado aux: listaEstados){
 					novoNome += aux.getNome() + ",";
@@ -61,23 +62,44 @@ public class ConversorAFD {
 		ConversorAFND conversorAux = new ConversorAFND(automato);
 		// criar o novo conjunto de estados iniciais baseado no fecho lambida
 		conversorAux.gerarFechoLambida(estadoInicial, novoEstadoInicial);
-
+		
+		novoEstadoInicial.sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
+		
 		estadoInicial = geraEstado(novoEstadoInicial);
 		automatoAux.addEstado( estadoInicial);
 		
 		boolean validador = false;
-
-		while(validador == false){
-			for(Transicao transicaoAux : estadoInicial.getTransicoes()){
-				
+		
+		Queue<Estado> listaEstados = new LinkedList<Estado>();
+		listaEstados.add(estadoInicial);
+		
+		//procura novos estados
+		while(!listaEstados.isEmpty()){
+			//percorre as transicoes do estado verificado
+			for(Transicao transicaoAux : listaEstados.poll().getTransicoes()){
+				String nomeEstado = "";
+				if(!transicaoAux.getLetra().equals(".")){
+					transicaoAux.getEstadosSaida().sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
+					//concatena estados da transicao para verificacao de nome
+					for(Estado estadosTransicao: transicaoAux.getEstadosSaida()){
+						nomeEstado += estadosTransicao.getNome() + ",";
+					}
+					
+					//verifica se existe algum estado com o nome
+					
+					Estado novoEstado = automatoAux.getEstado(nomeEstado);
+					if(novoEstado == null){
+						novoEstado = geraEstado( transicaoAux.getEstadosSaida() );
+						automatoAux.addEstado(novoEstado);
+						listaEstados.add(novoEstado);
+					}
+					
+					
+				}
+			
 			}
-			validador = true;
 		}
-		
-
 		System.out.println("");
-		
-		
 		return automatoAux;
 	}
 }

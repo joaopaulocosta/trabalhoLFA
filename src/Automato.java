@@ -40,8 +40,9 @@ public class Automato {
 	//retorna estado correspondente a nome
 	public Estado getEstado(String nomeEstado){
 		for(Estado aux : this.listaEstados){
-			if(aux.getNome().equals(nomeEstado))
+			if(aux.getNome().equals(nomeEstado)){
 				return aux;
+			}
 		}
 		return null;
 	}

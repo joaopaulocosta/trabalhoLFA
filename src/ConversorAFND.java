@@ -40,7 +40,7 @@ public class ConversorAFND {
 			ArrayList<Estado> fechoLambida = new ArrayList<Estado>();
 			
 			this.gerarFechoLambida(estadoAtual, fechoLambida);
-			
+			fechoLambida.sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
 			//imprime fecho lambida
 			
 			/*System.out.print("Fecho: "+ estadoAtual.getNome() + " {");

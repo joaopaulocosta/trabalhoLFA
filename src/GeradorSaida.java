@@ -32,7 +32,7 @@ public class GeradorSaida {
 	//3 Objeto PrintWriter que grava no arquivo
 	public void imprimir( String texto, int flagQuebraLinha, PrintWriter gravarArq){
 		gravarArq.printf("%s", texto);
-		for(int i = texto.length(); i< 31; i++){
+		for(int i = texto.length(); i< 40; i++){
 			gravarArq.printf(" ");
 		}
 		
