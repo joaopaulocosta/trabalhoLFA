@@ -30,7 +30,9 @@ public class ConversorAFD {
 
 					}
 				}
-				listaEstados.sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
+				
+				//ordena lista de estados
+				listaEstados.sort((Estado estado1, Estado estado2) -> estado1.comparaIndice(estado2.getIndiceOrdenacao()));
 				String novoNome = "";
 				for(Estado aux: listaEstados){
 					novoNome += aux.getNome() + ",";
@@ -63,7 +65,6 @@ public class ConversorAFD {
 		// criar o novo conjunto de estados iniciais baseado no fecho lambida
 		conversorAux.gerarFechoLambida(estadoInicial, novoEstadoInicial);
 		
-		novoEstadoInicial.sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
 		indice = 0;
 		estadoInicial = geraEstado(novoEstadoInicial);
 		estadoInicial.setIndiceOrdenacao(indice++);
@@ -80,7 +81,7 @@ public class ConversorAFD {
 			for(Transicao transicaoAux : listaEstados.poll().getTransicoes()){
 				String nomeEstado = "";
 				if(!transicaoAux.getLetra().equals(".")){
-					transicaoAux.getEstadosSaida().sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
+					
 					//concatena estados da transicao para verificacao de nome
 					for(Estado estadosTransicao: transicaoAux.getEstadosSaida()){
 						nomeEstado += estadosTransicao.getNome() + ",";

@@ -44,6 +44,7 @@ public class Transicao {
 	
 	//funcao retorna string com estados da lista de estados de saida 
 	public String stringEstados(){
+		this.getEstadosSaida().sort((Estado estado1, Estado estado2) -> estado1.comparaIndice(estado2.getIndiceOrdenacao()));
 		String estados = new String("");
 		int cont = 0;
 		for(Estado aux : this.estadosSaida){

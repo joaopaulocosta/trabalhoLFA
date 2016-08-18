@@ -42,7 +42,14 @@ public class GeradorSaida {
 	
 	public void imprimirAutomato(Automato automato, int flag, String nomeArquivo){
 		try{
-			FileWriter arq = new FileWriter(nomeArquivo, true);
+			FileWriter arq;
+			if(flag > 0){
+				 arq = new FileWriter(nomeArquivo, true);
+			}
+			else{
+				 arq = new FileWriter(nomeArquivo);
+			}
+			
 		    PrintWriter gravarArq = new PrintWriter(arq);
 		    	
 		    if(flag == 0)
@@ -76,7 +83,8 @@ public class GeradorSaida {
 							if(flag != 2)
 								imprimir(estados.getNome(),0, gravarArq);
 							else
-								imprimir("<" + estados.getNome() + ">",0, gravarArq);
+								//imprime nome do estado tirando a ultima virgula
+								imprimir("<" + estados.getNome().substring(0, estados.getNome().length() - 1 ) + ">",0, gravarArq);
 							for(String aux: alfabetoComLambida){
 								Transicao transicaoAux = estados.getTransicao(aux);
 								if(transicaoAux != null){	//se estado possui transição com letra do alfabeto
