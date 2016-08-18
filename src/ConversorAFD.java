@@ -14,22 +14,29 @@ public class ConversorAFD {
 	public Estado geraEstado( ArrayList<Estado> listaEstados){
 		// novo estado temporario
 				Estado estadoAux = new Estado("novoEstado");
-				
+				ArrayList<Transicao> listaTransicoes = new ArrayList<Transicao>();
 				for(Estado estado: listaEstados){
 					
 					for(Transicao transicaoEstadoInicial : estado.getTransicoes()){
-						
 						// verifico se o estado auxiliar possui a atual transicao 
 						if(estadoAux.getTransicao(transicaoEstadoInicial.getLetra()) == null){
 							estadoAux.addTransicao(transicaoEstadoInicial);		
 						}
-						// cria a saida para a corrente transicao no novo estado inicial
-						for(Estado aux: transicaoEstadoInicial.getEstadosSaida()){
-							estadoAux.getTransicao(transicaoEstadoInicial.getLetra()).addEstadoSaida(aux);
-						}
+						
+						listaTransicoes.add(transicaoEstadoInicial);
+						
 
 					}
+					
+					
 				}
+				
+				for(Transicao transicaoAux: listaTransicoes){
+					for(Estado auxEstado: transicaoAux.getEstadosSaida()){
+						estadoAux.getTransicao(transicaoAux.getLetra()).addEstadoSaida(auxEstado);
+					}
+				}
+				
 				
 				//ordena lista de estados
 				listaEstados.sort((Estado estado1, Estado estado2) -> estado1.comparaIndice(estado2.getIndiceOrdenacao()));
@@ -92,7 +99,6 @@ public class ConversorAFD {
 					Estado novoEstado = automatoAux.getEstado(nomeEstado);
 					if(novoEstado == null){
 						novoEstado = geraEstado( transicaoAux.getEstadosSaida() );
-						
 						automatoAux.addEstado(novoEstado);
 						listaEstados.add(novoEstado);
 					}

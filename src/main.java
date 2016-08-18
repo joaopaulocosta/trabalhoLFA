@@ -11,13 +11,12 @@ public class main {
 		conversorAfnd.mapeiaLambida();
 		automato.delLetra(".");
 		System.out.println("");
-		automato.getEstados().sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
 		saida.imprimirAutomato(automato,1,"saida.txt");				//imprimindo segunda tabela
 		
 		ConversorAFD conversorAfd = new ConversorAFD(automato);
 		Automato afd = conversorAfd.Conversion();
 		
-		saida.imprimirAutomato(afd,2,"saida.txt");
+		saida.imprimirAutomato(afd,2,"saida.txt");					//imprimindo terceira tabela
 		
 	}
 }
