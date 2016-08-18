@@ -32,7 +32,7 @@ public class GeradorSaida {
 	//3 Objeto PrintWriter que grava no arquivo
 	public void imprimir( String texto, int flagQuebraLinha, PrintWriter gravarArq){
 		gravarArq.printf("%s", texto);
-		for(int i = texto.length(); i< 30; i++){
+		for(int i = texto.length(); i< 31; i++){
 			gravarArq.printf(" ");
 		}
 		
@@ -45,6 +45,7 @@ public class GeradorSaida {
 			FileWriter arq = new FileWriter(nomeArquivo, true);
 		    PrintWriter gravarArq = new PrintWriter(arq);
 		    	
+		    if(flag == 0)
 		    	imprimir("Saída: ("+ nomeArquivo + "):",1,gravarArq);
 		    
 				String texto = new String("");
@@ -72,18 +73,30 @@ public class GeradorSaida {
 					ArrayList<String> alfabetoComLambida = automato.getAlfabeto();
 					for(Estado estados : automato.getEstados()){
 						//imprimindo colunas
-							imprimir(estados.getNome(),0, gravarArq);
+							if(flag != 2)
+								imprimir(estados.getNome(),0, gravarArq);
+							else
+								imprimir("<" + estados.getNome() + ">",0, gravarArq);
 							for(String aux: alfabetoComLambida){
 								Transicao transicaoAux = estados.getTransicao(aux);
 								if(transicaoAux != null){	//se estado possui transição com letra do alfabeto
-									texto += "{";
+									if(flag != 2)
+										texto += "{";
+									else
+										texto += "<";
 									texto += transicaoAux.stringEstados();
-									texto += "}";
+									if(flag != 2)
+										texto += "}";
+									else
+										texto += ">";
 									imprimir(texto,0, gravarArq);
 									
 								}
 								else{	//sem transições para esta letra
-									imprimir("0",0, gravarArq);
+									if(flag != 2)
+										imprimir("0",0, gravarArq);
+									else
+										imprimir("-",0, gravarArq);
 								}
 								texto = "";
 								

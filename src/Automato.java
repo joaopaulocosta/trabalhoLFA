@@ -29,6 +29,10 @@ public class Automato {
 		this.estadoInicial = estadoInicial;
 	}
 	
+	public Estado getEstadoInicial(){
+		return this.estadoInicial;
+	}
+	
 	public void addEstadoFinal(Estado estadoFinal){
 		this.estadosFinais.add(estadoFinal);
 	}

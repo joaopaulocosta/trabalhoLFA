@@ -9,6 +9,10 @@ public class Estado {
 		listaTransicoes = new ArrayList<Transicao>();
 	}
 	
+	public void setNome(String nome){
+		this.nome = nome;
+	}
+	
 	public String getNome(){
 		return this.nome;
 	}
