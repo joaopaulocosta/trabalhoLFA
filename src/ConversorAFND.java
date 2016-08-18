@@ -82,10 +82,9 @@ public class ConversorAFND {
 
 						//estadoAtual.getTransicao(letra).getEstadosSaida().addAll(novaTransicao.getEstadosSaida());
 					}
+					transicoesEstadoDoFecho.getEstadosSaida().sort((Estado estado1, Estado estado2) -> estado1.comparaIndice(estado2.getIndiceOrdenacao()));
 					
-
 				}
-
 			}
 		} 
 	}

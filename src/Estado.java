@@ -22,6 +22,19 @@ public class Estado {
 		this.indiceOrdenacao = indice;
 	}
 	
+	public int getIndiceOrdenacao(){
+		return this.indiceOrdenacao;
+	}
+	
+	public int comparaIndice(int indice){
+		if(this.indiceOrdenacao > indice)
+			return 1;
+		else if(this.indiceOrdenacao < indice)
+			return -1;
+		else
+			return 0;
+	}
+	
 	//função que adiciona transiçao no estado, caso a transição ja exista ele concatena a lista de estados de saída 
 	//verificando se existe estados repetidos
 	public void addTransicao(Transicao transicao){

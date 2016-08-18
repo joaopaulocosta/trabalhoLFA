@@ -5,7 +5,7 @@ import java.util.Queue;
 public class ConversorAFD {
 	
 	private Automato automato;
-	
+	private int indice;
 	public ConversorAFD(Automato automato){
 		this.automato = automato;
 	}
@@ -64,8 +64,9 @@ public class ConversorAFD {
 		conversorAux.gerarFechoLambida(estadoInicial, novoEstadoInicial);
 		
 		novoEstadoInicial.sort((Estado estado1, Estado estado2) -> estado1.getNome().compareTo(estado2.getNome()));
-		
+		indice = 0;
 		estadoInicial = geraEstado(novoEstadoInicial);
+		estadoInicial.setIndiceOrdenacao(indice++);
 		automatoAux.addEstado( estadoInicial);
 		
 		boolean validador = false;
@@ -90,6 +91,7 @@ public class ConversorAFD {
 					Estado novoEstado = automatoAux.getEstado(nomeEstado);
 					if(novoEstado == null){
 						novoEstado = geraEstado( transicaoAux.getEstadosSaida() );
+						
 						automatoAux.addEstado(novoEstado);
 						listaEstados.add(novoEstado);
 					}

@@ -13,6 +13,8 @@ public class GeradorAutomato {
 	
 //Funções de leitura de arquivo--------------------------------------------------------------------------------------------------	
 	
+	public int indice = 0;
+	
 	//funcao que lê o conteúdo do arquivo e salva em um StringBuilder
 	public StringBuilder lerArquivo(String nomeArquivo){
 		StringBuilder conteudoArquivo = new StringBuilder();
@@ -259,7 +261,7 @@ public class GeradorAutomato {
 		//Adicionando os estados ao objeto Automato
 		while(estados.hasMoreTokens()){
 			Estado novoEstado = new Estado(estados.nextToken());
-			
+			novoEstado.setIndiceOrdenacao(indice++);
 			//Adiciona estado inicial
 			if(novoEstado.getNome().equals(estadoInicial.trim())){ //função trim remove espaços no inicio e final da string
 				automato.addEstadoInicial(novoEstado);
